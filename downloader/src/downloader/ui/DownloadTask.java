@@ -2,6 +2,8 @@ package downloader.ui;
 
 import downloader.fc.Downloader;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -47,7 +49,24 @@ public class DownloadTask extends BorderPane {
       });
     });
   	
+  	buttonSuppr.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+      	thread.resume();
+      	
+      }
+    });
+  	
     thread.start();
+  }
+  
+  // Permet de reprendre un téléchargement
+  public void play() {
+    //unlock();
+  }
+  
+  // Permet de suspendre un téléchargement
+  public void pause() {
+    //lock();
   }
 
 	public void run() {

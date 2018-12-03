@@ -25,6 +25,7 @@ public class Main extends Application {
 		// Création et paramètres - Bandeau d'ajout de téléchargement
 		BorderPane panneau_add = new BorderPane();
 		fenetre_principale.setBottom(panneau_add);
+		panneau_download.setFitToWidth(true); // Taille de la Progress Bar adaptée à la taille de la fenêtre
 		
 				// Création et paramètres - Zone de texte URL
 				TextField champUrl = new TextField("http://iihm.imag.fr/index.html");
