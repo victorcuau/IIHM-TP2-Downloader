@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -29,6 +31,7 @@ public class Main extends Application {
 		
 				// Création et paramètres - Zone de texte URL
 				TextField champUrl = new TextField("http://iihm.imag.fr/index.html");
+				champUrl.setPromptText("Input an URL ...");
 				panneau_add.setCenter(champUrl);
 				
 				// Création et paramètres - Bouton "add"
@@ -38,6 +41,28 @@ public class Main extends Application {
 		      public void handle(ActionEvent event) {
 		        DownloadTask cdownloader = new DownloadTask(champUrl.getText());
 		        vbox.getChildren().add(cdownloader);
+		        
+		        Button buttonSuppr = new Button("✖");
+		      	Button buttonPausePlay = new Button("||");
+		      	HBox buttonBar = new HBox();
+		      	buttonBar.getChildren().addAll(buttonSuppr,buttonPausePlay);
+		      	buttonBar.setSpacing(1.5);
+		      	
+		      	cdownloader.setRight(buttonBar);
+		      	
+			    	buttonSuppr.setOnAction(new EventHandler<ActionEvent>() {
+				      public void handle(ActionEvent event) {
+				      	cdownloader.downloader.remove();
+				      	vbox.getChildren().remove(cdownloader);
+				      }
+			    	});
+			    	
+			    	buttonPausePlay.setOnAction(new EventHandler<ActionEvent>() {
+				      public void handle(ActionEvent event) {
+				      	cdownloader.downloader.playPause(buttonPausePlay);
+				      }
+			    	});
+			    	
 		      }
 		    });
 		

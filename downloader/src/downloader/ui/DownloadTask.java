@@ -16,10 +16,6 @@ public class DownloadTask extends BorderPane {
 	ProgressBar progressBar;
   Thread thread;
   Label nomUrl;
-  Button buttonSuppr;
-  Button buttonPause;
-  Button buttonReprendre;
-  HBox buttonBar;
   
   DownloadTask(String URL){
   	downloader = new Downloader(URL);
@@ -28,45 +24,13 @@ public class DownloadTask extends BorderPane {
   	thread = new Thread(downloader);
   	nomUrl = new Label(URL);
   	
-  	Button buttonSuppr = new Button("X");
-  	Button buttonPause = new Button("||");
-  	Button buttonReprendre = new Button(">");
-  	buttonBar = new HBox();
-  	buttonBar.getChildren().addAll(buttonSuppr,buttonPause,buttonReprendre);
-  	buttonBar.setHgrow(progressBar, Priority.ALWAYS);
-  	buttonBar.setSpacing(1.5);
-  	
   	this.setTop(nomUrl);
   	this.setCenter(progressBar);
-  	this.setRight(buttonBar);
   	
   	// On abonne la ProgressBar aux mises à jour de la progression du téléchargement
-  	downloader.progressProperty().addListener((obs, o, n) -> {
-  		Platform.runLater(new Runnable() {
-        public void run() {
-        	progressBar.setProgress(n.doubleValue());
-        }
-      });
-    });
-  	
-  	buttonSuppr.setOnAction(new EventHandler<ActionEvent>() {
-      public void handle(ActionEvent event) {
-      	thread.resume();
-      	
-      }
-    });
+  	progressBar.progressProperty().bind(downloader.progressProperty());
   	
     thread.start();
-  }
-  
-  // Permet de reprendre un téléchargement
-  public void play() {
-    //unlock();
-  }
-  
-  // Permet de suspendre un téléchargement
-  public void pause() {
-    //lock();
   }
 
 	public void run() {
