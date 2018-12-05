@@ -103,6 +103,7 @@ public class Downloader extends Task {
 			
 			size += count;
 			updateProgress(1.*size/content_length, 1.);
+			
 			playPauseLock.unlock();
 			Thread.sleep(1000);			
 			playPauseLock.lock();
@@ -122,6 +123,7 @@ public class Downloader extends Task {
 		}
 			
 		temp.renameTo(new File(filename));
+		playPauseLock.unlock(); // On rend le lock
 		return filename;
 	}
 	
