@@ -20,10 +20,10 @@ public class DownloadTask extends BorderPane {
   DownloadTask(String URL){
   	downloader = new Downloader(URL);
   	progressBar = new ProgressBar();
-  	progressBar.setMaxWidth(Double.MAX_VALUE + 10);
+  	progressBar.setMaxWidth(Double.MAX_VALUE);
   	thread = new Thread(downloader);
   	nomUrl = new Label(URL);
-  	
+
   	this.setTop(nomUrl);
   	this.setCenter(progressBar);
   	

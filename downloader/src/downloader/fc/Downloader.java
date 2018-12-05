@@ -127,6 +127,9 @@ public class Downloader extends Task {
 		return filename;
 	}
 	
+	/*
+	 * Cette fonction supprime un téléchargement
+	 */
 	public void remove() {
 		if(playPauseLock.isLocked()) {
 			playPauseLock.unlock();
@@ -135,6 +138,11 @@ public class Downloader extends Task {
 		this.cancel();
 	}
 	
+	/*
+	 * Cette fonction met en pause ou reprend un téléchargement,
+	 * selon son état actuel.
+	 * De plus, elle adapte le bouton PLAY/PAUSE à l'état actuel.
+	 */
 	public void playPause(Button button) {
 		if (button.getText().equals("||")) {
 			playPauseLock.lock();

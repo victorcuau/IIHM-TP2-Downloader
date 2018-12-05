@@ -30,26 +30,30 @@ public class Main extends Application {
 		panneau_download.setFitToWidth(true); // Taille de la Progress Bar adaptée à la taille de la fenêtre
 		
 				// Création et paramètres - Zone de texte URL
-				TextField champUrl = new TextField("http://iihm.imag.fr/index.html");
-				champUrl.setPromptText("Input an URL ...");
+				TextField champUrl = new TextField("http://iihm.imag.fr/index.html"); // URL de test déjà remplie
+				champUrl.setPromptText("Input an URL ..."); // Texte si champ vide
 				panneau_add.setCenter(champUrl);
 				
 				// Création et paramètres - Bouton "add"
-				Button ButtonPlus = new Button("add");
+				Button ButtonPlus = new Button("Ajouter");
 				panneau_add.setRight(ButtonPlus);
+				
+				// Actions lors du clic sur le bouton AJOUTER
 				ButtonPlus.setOnAction(new EventHandler<ActionEvent>() {
 		      public void handle(ActionEvent event) {
 		        DownloadTask cdownloader = new DownloadTask(champUrl.getText());
 		        vbox.getChildren().add(cdownloader);
+		        
+		        cdownloader.progressBar.setStyle("-fx-accent: blue;"); // Couleur de la ProgressBar
 		        
 		        Button buttonSuppr = new Button("✖");
 		      	Button buttonPausePlay = new Button("||");
 		      	HBox buttonBar = new HBox();
 		      	buttonBar.getChildren().addAll(buttonSuppr,buttonPausePlay);
 		      	buttonBar.setSpacing(1.5);
-		      	
 		      	cdownloader.setRight(buttonBar);
 		      	
+		      	// Actions lors du clic sur le bouton SUPPRIMER
 			    	buttonSuppr.setOnAction(new EventHandler<ActionEvent>() {
 				      public void handle(ActionEvent event) {
 				      	cdownloader.downloader.remove();
@@ -57,9 +61,21 @@ public class Main extends Application {
 				      }
 			    	});
 			    	
+			    	// Actions lors du clic sur le bouton PLAY/PAUSE
 			    	buttonPausePlay.setOnAction(new EventHandler<ActionEvent>() {
 				      public void handle(ActionEvent event) {
 				      	cdownloader.downloader.playPause(buttonPausePlay);
+				      	
+				      	// ProgressBar grisée si téléchargement en pause
+				      	if (buttonPausePlay.getText().equals("▶")) {
+				      		cdownloader.progressBar.setStyle("-fx-accent: grey;");
+				      	}
+				      	
+				      	// ProgressBar bleue si reprise du téléchargement
+				      	if (buttonPausePlay.getText().equals("||")) {
+				      		cdownloader.progressBar.setStyle("-fx-accent: blue;");
+				      	}
+				      	
 				      }
 			    	});
 			    	
