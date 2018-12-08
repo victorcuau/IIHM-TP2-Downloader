@@ -66,14 +66,17 @@ public class Main extends Application {
 				      public void handle(ActionEvent event) {
 				      	cdownloader.downloader.playPause(buttonPausePlay);
 				      	
-				      	// ProgressBar grisée si téléchargement en pause
-				      	if (buttonPausePlay.getText().equals("▶")) {
-				      		cdownloader.progressBar.setStyle("-fx-accent: grey;");
-				      	}
-				      	
-				      	// ProgressBar bleue si reprise du téléchargement
-				      	if (buttonPausePlay.getText().equals("||")) {
-				      		cdownloader.progressBar.setStyle("-fx-accent: blue;");
+				      	// Si le téléchargement n'est pas terminé
+				      	if (cdownloader.downloader.getProgress() != 1) {
+				      		// ProgressBar grisée si téléchargement en pause
+					      	if (buttonPausePlay.getText().equals("▶")) {
+					      		cdownloader.progressBar.setStyle("-fx-accent: grey;");
+					      	}
+					      	
+					      	// ProgressBar bleue si reprise du téléchargement
+					      	if (buttonPausePlay.getText().equals("||")) {
+					      		cdownloader.progressBar.setStyle("-fx-accent: blue;");
+					      	}
 				      	}
 				      	
 				      }
